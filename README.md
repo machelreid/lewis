@@ -1,5 +1,5 @@
 # LEWIS
-Official code for LEWIS, from:  "LEWIS: Levenshtein Editing for Unsupervised Text Style Transfer", ACL-IJCNLP 2021 Findings by Machel Reid and Victor Zhong
+Official code for LEWIS, from:  "[LEWIS: Levenshtein Editing for Unsupervised Text Style Transfer](https://machelreid.github.io/resources/reid21lewis.pdf)", ACL-IJCNLP 2021 Findings by Machel Reid and Victor Zhong
 
 ## Setup
 
