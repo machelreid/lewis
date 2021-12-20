@@ -58,10 +58,10 @@ Where `prefix` is the name you are giving to the dataset, and `train.txt`, `vali
 
 Fine-tune a RoBERTa for style classification to later use attentions to identify sections/tokens of the text that are strongly correlated with a given style class. The fine-tuning step is implemented mainly on the folder `roberta_classifier`. The while process is done using `fairseq` and works as follows:
 
-1. Generate pre-processed data for fine-tuning using  `preprocess-roberta-classifer.sh` script, which will load the raw txt data for each style class, concatenate it and add labels, and create binary files that `fairseq` can use for faster training.
+1. Generate pre-processed data for fine-tuning using  `preprocess-roberta-classifier.sh` script, which will load the raw txt data for each style class, concatenate it and add labels, and create binary files that `fairseq` can use for faster training.
 
    ```bash
-   bash preprocess-roberta-classifer.sh path/to/data <prefix> <domain-1-suffix> <domain-2-suffix>
+   bash preprocess-roberta-classifier.sh path/to/data <prefix> <domain-1-suffix> <domain-2-suffix>
    ```
 
    The outputs of this process will be stored in `path/to/data/roberta-classifier/<prefix>`
