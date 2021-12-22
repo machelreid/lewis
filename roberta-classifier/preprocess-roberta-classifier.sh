@@ -34,7 +34,7 @@ fairseq-preprocess \
 
 # create actual labels for each style class
 for i in $(seq $(wc -l $INPUT_PATH/$DOMAIN_1/train.txt | cut -d ' ' -f1)); do echo 0 >> $OUTPUT_PATH/train.label; done
-for i in $(seq $(wc -l $INTPUT_PATH/$DOMAIN_1/valid.txt | cut -d ' ' -f1)); do echo 0 >> $OUTPUT_PATH/valid.label; done
+for i in $(seq $(wc -l $INPUT_PATH/$DOMAIN_1/valid.txt | cut -d ' ' -f1)); do echo 0 >> $OUTPUT_PATH/valid.label; done
 
 for i in $(seq $(wc -l $INPUT_PATH/$DOMAIN_2/train.txt | cut -d ' ' -f1)); do echo 1 >> $OUTPUT_PATH/train.label; done
 for i in $(seq $(wc -l $INPUT_PATH/$DOMAIN_2/valid.txt | cut -d ' ' -f1)); do echo 1 >> $OUTPUT_PATH/valid.label; done
