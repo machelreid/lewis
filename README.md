@@ -104,7 +104,8 @@ The second step is to fine-tune BART in the task of denoising to have generative
    ```bash
    bash train-bart-denoising.sh path/to/data <prefix> <domain-sufix>
    ```
-
+   
+   Incase you encounter the error ``fairseq-train: error: unrecognized arguments: --stop-min-lr -1.0`` switching ``--stop-min-lr`` to [``--min-lr``](https://groups.google.com/g/fairseq-users/c/WAbE5wTLnjQ) inside `lewis/bart-denoising/train-bart-denoising.sh` might help. 
    This will output checkpoints and training logs at `path/to/data/bart-denoising/<prefix>/<domain-sufix>`
 
    - [ ] Improve training stop criterion for this script (perplexity on vaild seems a good alternative)
