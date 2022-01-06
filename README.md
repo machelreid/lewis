@@ -174,7 +174,7 @@ Our final training step is to fine-tune a RoBERTa token-level classifier (or tag
 1. The first step here is to generate the Levenshtein editing operations from the parallel data, which  the tagger will learn to propose edits. For this, use `preprocess-roberta-tagger.py` as follows.
 
 ```bash
-python preprocess-roberta-tagger.py --path-to-parallel-data-txt path/to/domain/parallel/txt --mask_threshold <mask-threshold> --output_path /path/to/output/parallel/json
+python preprocess-roberta-tagger.py --path-to-parallel-data-file path/to/domain/parallel/txt --mask-threshold <mask-threshold> --output-path /path/to/output/parallel/json
 ```
 
 Where `--path-to-parallel-data-txt ` should point to one of the `.para` files created in step III-1, `--mask-threshold` controls which sentences in the parallel data we will use for training based on the number of `<mask>` tokens per sentence (a good rule of thumb is to set it to approximately be 1/3 of the average total sequence length on the data) and `--output_path`should point to a json file.
