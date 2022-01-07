@@ -8,7 +8,7 @@ Official code for LEWIS, from:  "[LEWIS: Levenshtein Editing for Unsupervised Te
 ```bash
 conda create -n lewis python=3.7
 conda activate lewis
-conda install pytorch cudatoolkit=10.2 -c pytorch
+conda install pytorch torchvision torchaudio cudatoolkit=10.2 -c pytorch
 pip install transformers
 pip install python-Levenshtein
 
