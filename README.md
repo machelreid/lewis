@@ -8,7 +8,7 @@ Official code for LEWIS, from:  "[LEWIS: Levenshtein Editing for Unsupervised Te
 ```bash
 conda create -n lewis python=3.7
 conda activate lewis
-conda install pytorch cudatoolkit=10.2 -c pytorch
+conda install pytorch torchvision torchaudio cudatoolkit=10.2 -c pytorch
 pip install transformers
 pip install python-Levenshtein
 
@@ -27,6 +27,12 @@ cd lewis
 cp -r fairseq ~/fairseq/
 
 ```
+
+In some places (later) you might encounter argument errors, for fixing that just check what the argument name is in the code file arg parser and what the command has most likely the difference might be a "\_" being inplace of a "-" or vice-a-versa
+
+Incase you run into Cuda OOM Errors, some ways which worked are - 
+- Reduce the Batch Size
+- Move to a GPU with more Memory
 
 ### II. Download required pre-trained models
 
@@ -104,8 +110,11 @@ The second step is to fine-tune BART in the task of denoising to have generative
    ```bash
    bash train-bart-denoising.sh path/to/data <prefix> <domain-sufix>
    ```
-
+   
    This will output checkpoints and training logs at `path/to/data/bart-denoising/<prefix>/<domain-sufix>`
+   
+   Incase you encounter the error ``fairseq-train: error: unrecognized arguments: --stop-min-lr -1.0`` switching ``--stop-min-lr`` to [``--min-lr``](https://groups.google.com/g/fairseq-users/c/WAbE5wTLnjQ) inside `lewis/bart-denoising/train-bart-denoising.sh` might help. 
+   
 
    - [ ] Improve training stop criterion for this script (perplexity on vaild seems a good alternative)
 
@@ -154,7 +163,7 @@ This process will create the `path/to/data/<synth-prefix>` folder and inside pla
 bash preprocess-bart-mt.sh path/to/data <synth-prefix> <domain_prefix> <valid-split-size>
 ```
 
-This will generate the training data. This includes creating a new dictionary for BART (updating its original `dict.txt`) so that it also contains the `<mask>` token which we will be feeding. Training/validations splits will be created at `path/to/data/<synth-prefix>` and the rest of the output will be placed at `path/to/data/bart-mt/<synth-prefix>/<domain-prefix>`.
+This will generate the training data. This includes creating a new dictionary for BART (updating its original `dict.txt`) so that it also contains the `<mask>` token which we will be feeding. Training/validations splits will be created at `path/to/data/<synth-prefix>` and the rest of the output will be placed at `path/to/data/bart-mt/<synth-prefix>/<domain-prefix>`. Here the `<valid-split-size>` is literally the number of lines you wish to use for splitting.
 
 2. Train BART on the parallel data.
 
@@ -171,7 +180,7 @@ Our final training step is to fine-tune a RoBERTa token-level classifier (or tag
 1. The first step here is to generate the Levenshtein editing operations from the parallel data, which  the tagger will learn to propose edits. For this, use `preprocess-roberta-tagger.py` as follows.
 
 ```bash
-python preprocess-roberta-tagger.py --path-to-parallel-data-txt path/to/domain/parallel/txt --mask_threshold <mask-threshold> --output_path /path/to/output/parallel/json
+python preprocess-roberta-tagger.py --path-to-parallel-data-file path/to/domain/parallel/txt --mask-threshold <mask-threshold> --output-path /path/to/output/parallel/json
 ```
 
 Where `--path-to-parallel-data-txt ` should point to one of the `.para` files created in step III-1, `--mask-threshold` controls which sentences in the parallel data we will use for training based on the number of `<mask>` tokens per sentence (a good rule of thumb is to set it to approximately be 1/3 of the average total sequence length on the data) and `--output_path`should point to a json file.
@@ -179,7 +188,7 @@ Where `--path-to-parallel-data-txt ` should point to one of the `.para` files cr
 2. Train the RoBERTa tagger with `train-roberta-tagger.py `, as follows.
 
 ```bash
-python train-roberta-tagger.py --path-to-parallel-data-json path/to/parallel/json --hf_dump path/to/data/roberta-classifier-py/<prefix>/checkpoint.pt --save_dir path/to/data/<synth-prefix>/roberta-tagger --epochs <epochx> --bsz <batch_size> --update_freq <update_freq> 
+python train-roberta-tagger.py --path-to-parallel-data-json path/to/parallel/json --hf_dump path/to/data/roberta-classifier-py/<prefix>/checkpoint.pt --save-dir path/to/data/<synth-prefix>/roberta-tagger --epochs <epochx> --bsz <batch_size> --update-freq <update_freq> 
 ```
 
 This will initialize the token-level classifier with the sentence-level classifier that we trained on step I, using a plain `roberta-base` should work equally well. 
