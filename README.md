@@ -28,6 +28,8 @@ cp -r fairseq ~/fairseq/
 
 ```
 
+In some places (later) you might encounter argument errors, for fixing that just check what the argument name is in the code file arg parser and what the command has most likely the difference might be a "\_" being inplace of a "-" or vice-a-versa
+
 ### II. Download required pre-trained models
 
 ```bash
@@ -157,7 +159,7 @@ This process will create the `path/to/data/<synth-prefix>` folder and inside pla
 bash preprocess-bart-mt.sh path/to/data <synth-prefix> <domain_prefix> <valid-split-size>
 ```
 
-This will generate the training data. This includes creating a new dictionary for BART (updating its original `dict.txt`) so that it also contains the `<mask>` token which we will be feeding. Training/validations splits will be created at `path/to/data/<synth-prefix>` and the rest of the output will be placed at `path/to/data/bart-mt/<synth-prefix>/<domain-prefix>`.
+This will generate the training data. This includes creating a new dictionary for BART (updating its original `dict.txt`) so that it also contains the `<mask>` token which we will be feeding. Training/validations splits will be created at `path/to/data/<synth-prefix>` and the rest of the output will be placed at `path/to/data/bart-mt/<synth-prefix>/<domain-prefix>`. Here the `<valid-split-size>` is literally the number of lines you wish to use for splitting.
 
 2. Train BART on the parallel data.
 
