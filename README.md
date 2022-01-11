@@ -184,7 +184,7 @@ Where `--path-to-parallel-data-txt ` should point to one of the `.para` files cr
 2. Train the RoBERTa tagger with `train-roberta-tagger.py `, as follows.
 
 ```bash
-python train-roberta-tagger.py --path-to-parallel-data-json path/to/parallel/json --hf_dump path/to/data/roberta-classifier-py/<prefix>/checkpoint.pt --save_dir path/to/data/<synth-prefix>/roberta-tagger --epochs <epochx> --bsz <batch_size> --update_freq <update_freq> 
+python train-roberta-tagger.py --path-to-parallel-data-json path/to/parallel/json --hf_dump path/to/data/roberta-classifier-py/<prefix>/checkpoint.pt --save-dir path/to/data/<synth-prefix>/roberta-tagger --epochs <epochx> --bsz <batch_size> --update-freq <update_freq> 
 ```
 
 This will initialize the token-level classifier with the sentence-level classifier that we trained on step I, using a plain `roberta-base` should work equally well. 
