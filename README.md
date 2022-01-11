@@ -30,6 +30,10 @@ cp -r fairseq ~/fairseq/
 
 In some places (later) you might encounter argument errors, for fixing that just check what the argument name is in the code file arg parser and what the command has most likely the difference might be a "\_" being inplace of a "-" or vice-a-versa
 
+Incase you run into Cuda OOM Errors, some ways which worked are - 
+- Reduce the Batch Size
+- Move to a GPU with more Memory
+
 ### II. Download required pre-trained models
 
 ```bash
